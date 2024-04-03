@@ -1,6 +1,6 @@
 use bufio::{read_line};
 use os::{open};
-use print::{printv};
+use print::{printv, logv};
 use strings::{concat, fromutf8};
 use io;
 
@@ -14,7 +14,10 @@ fn showQuestion(storage: str, qid: str) int = {
 		const buf:[]u8 = match(read_line(f)) {
 			case let bytes: []u8 => yield bytes;
 			case io::EOF => break;
-			case io::error => return 7;
+			case io::error => {
+				logv("Failed to read answer at question ", qid, ".\n");
+				return 7;
+			};
 		};
 		printv(match(fromutf8(buf)) {
 			case let s: str => yield s;
