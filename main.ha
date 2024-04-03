@@ -1,10 +1,11 @@
 use print::{printv};
 use os::{args, exit, getenv};
+use strings::{concat};
 
 export fn main() void = {
 	// Read environment
 	let storage: str = match(getenv("QNA_STORAGE")) {
-	case void => return;
+	case void => yield concat(getenv("HOME") as str, "/.qna_storage");
 	case let s: str => yield s;
 	};
 
