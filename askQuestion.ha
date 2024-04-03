@@ -6,7 +6,7 @@ use os::{create, exists};
 use io;
 
 fn askQuestion(storage: str, question: str) int = {
-	let filename = concat(storage, u64tosb(string64(question), 16));
+	let filename = concat(storage, "/", u64tosb(string64(question), 16));
 	defer free(filename);
 	if (exists(filename)) {
 		fdprintv(2, "Hash error occured.\n");
