@@ -1,5 +1,5 @@
 use bufio::{read_line};
-use os::{open};
+use os::{exists, open};
 use print::{printv, logv};
 use strings::{concat, fromutf8};
 use io;
@@ -7,6 +7,10 @@ use io;
 fn showQuestion(storage: str, qid: str) int = {
 	let filename = concat(storage, "/", qid);
 	defer free(filename);
+	if (!exists(filename)) {
+		logv("Question ", qid, " does not exist.\n");
+		return 3;
+	};
 	let f: io::file = open(filename)!;
 	defer io::close(f)!;
 	printv(getQuestion(f), "\n");
