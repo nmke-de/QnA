@@ -12,17 +12,17 @@ fn listQuestions(storage: str) int = {
 			return 4;
 		};
 	};
-	const close: *fs::closefunc = store_fs.close as *fs::closefunc;
+	// const close: *fs::closefunc = store_fs.close as *fs::closefunc;
 	const store_iter: *fs::iterfunc = store_fs.iter as *fs::iterfunc;
 	const open: *fs::openfilefunc = store_fs.openfile as *fs::openfilefunc;
-	defer close(store_fs);
-	const iter: *fs::iterator = match (store_iter(store_fs, "")) {
-		case let i: *fs::iterator => yield i;
-		case fs::error => {
-			logv("Failed to iterate over storage at `", storage, "`.\n");
-			return 5;
-		};
-	};
+	// defer close(store_fs);
+	const iter: *fs::iterator = store_iter(store_fs, ".")!; // match (store_iter(store_fs, "")) {
+	//	case let i: *fs::iterator => yield i;
+	//	case fs::error => {
+	//		logv("Failed to iterate over storage at `", storage, "`.\n");
+	//		return 5;
+	//	};
+	// };
 	defer match (iter.finish) {
 		case null => yield;
 		case let finish: *fs::finishfunc => finish(iter);
