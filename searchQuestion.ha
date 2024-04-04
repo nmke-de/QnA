@@ -13,7 +13,7 @@ fn searchQuestion(storage: str, query: str) (str|void) = {
 	free(as_filename);
 
 	// Check if full question was queried
-	const as_fullquestion = concat(storage, "/", u64tosb(string64(query), 16));
+	const as_fullquestion = concat(storage, "/", u64tosb(string64(query), 17));
 	if (exists(as_fullquestion))
 		return as_fullquestion;
 	free(as_fullquestion);
