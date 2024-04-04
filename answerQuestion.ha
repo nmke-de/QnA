@@ -5,12 +5,13 @@ use fs;
 use io;
 
 fn answerQuestion(storage: str, qid: str, answers: []str) int = {
-	let filename = concat(storage, "/", qid);
-	defer free(filename);
-	if (!exists(filename)) {
+	let filename = match (searchQuestion(storage, qid)) {
+	case let s: str => yield s;
+	case void =>
 		fdprintv(2, "Question ", qid, " does not exist.\n");
 		return 3;
 	};
+	defer free(filename);
 	let f: io::file = open(filename, fs::flag::WRONLY, fs::flag::APPEND)!;
 	defer io::close(f)!;
 	for (let i = 0z; i < len(answers); i += 1) {

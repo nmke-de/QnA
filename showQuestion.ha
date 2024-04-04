@@ -1,16 +1,17 @@
 use bufio::{read_line};
-use os::{exists, open};
+use os::{open};
 use print::{printv, logv};
 use strings::{concat, fromutf8};
 use io;
 
 fn showQuestion(storage: str, qid: str) int = {
-	let filename = concat(storage, "/", qid);
-	defer free(filename);
-	if (!exists(filename)) {
+	let filename = match(searchQuestion(storage, qid)) {
+	case let s: str => yield s;
+	case void =>
 		logv("Question ", qid, " does not exist.\n");
 		return 3;
 	};
+	defer free(filename);
 	let f: io::file = open(filename)!;
 	defer io::close(f)!;
 	printv(getQuestion(f), "\n");
