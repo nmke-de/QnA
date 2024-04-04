@@ -11,7 +11,7 @@ export fn main() void = {
 
 	// Read arguments
 	let exitval: int = if (len(args) == 1) {
-		printv("Syntax: QnA <question>\n\tQnA <question-id> <answer>\n\tQnA list\n\tQnA show <question-id>\n");
+		printv("Syntax: qna <question>\n\tqna <question-id> <answer>\n\tqna list\n\tqna show <question-id>\n");
 		yield 1;
 	} else if (args[1] == "list") {
 		yield listQuestions(storage);
