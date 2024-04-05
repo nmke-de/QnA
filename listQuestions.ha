@@ -3,8 +3,10 @@ use print::{printv, logv};
 use fs;
 use io;
 
+// List all questions
 fn listQuestions(storage: str) int = {
 	// Open directory
+	// Get file system
 	const store_fs: *fs::fs = match (diropen(storage)) {
 		case let f: *fs::fs => yield f;
 		case fs::error => {
@@ -12,10 +14,12 @@ fn listQuestions(storage: str) int = {
 			return 4;
 		};
 	};
+	// Get necessary functions from file system object
 	const close: *fs::closefunc = store_fs.close as *fs::closefunc;
 	const store_iter: *fs::iterfunc = store_fs.iter as *fs::iterfunc;
 	const open: *fs::openfilefunc = store_fs.openfile as *fs::openfilefunc;
 	defer close(store_fs);
+	// Get iterator to iterate over directory
 	const iter: *fs::iterator = match (store_iter(store_fs, ".")) {
 		case let i: *fs::iterator => yield i;
 		case fs::error => {
@@ -23,6 +27,7 @@ fn listQuestions(storage: str) int = {
 			return 5;
 		};
 	};
+	// Tidy up
 	defer match (iter.finish) {
 		case null => yield;
 		case let finish: *fs::finishfunc => finish(iter);
@@ -30,6 +35,7 @@ fn listQuestions(storage: str) int = {
 
 	// Iterate over directory
 	for (true) {
+		// Get next item in directory
 		const entry: fs::dirent = match(iter.next(iter)) {
 			case let d: fs::dirent => yield d;
 			case void => break;
@@ -41,7 +47,7 @@ fn listQuestions(storage: str) int = {
 		// Ignore files that are not regular files
 		if (entry.ftype & fs::mode::REG != fs::mode::REG)
 			continue;
-		// TODO Read question and print filename (hash) and question to
+		// Read question and print filename (hash) and question to
 		// screen
 		let f: io::file = open(store_fs, entry.name)!;
 		defer io::close(f)!;

@@ -5,6 +5,7 @@ use hash::fnv::{string64};
 use print::{logv};
 use glob;
 
+// Tries to find a question based on query
 fn searchQuestion(storage: str, query: str) (str|void) = {
 	// Check verbatim query
 	const as_filename = concat(storage, "/", query);
