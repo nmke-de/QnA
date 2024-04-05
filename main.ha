@@ -1,6 +1,7 @@
 use print::{printv};
 use os::{args, exit, getenv};
 use strings::{concat};
+use io::{read};
 
 export fn main() void = {
 	// Read environment
@@ -15,6 +16,15 @@ export fn main() void = {
 		yield 1;
 	} else if (args[1] == "list") {
 		yield listQuestions(storage);
+	} else if (len(args[1]) < 8 && args[1] != "show") {
+		printv("\"", args[1], "\" is very short for a question. Continue? (y/N) ");
+		let buf: [2]u8 = [0u8...];
+		match (read(0, buf)) {case => yield;};
+		yield switch (buf[0]) {
+		case 'y' => yield askQuestion(storage, args[1]);
+		case 'Y' => yield askQuestion(storage, args[1]);
+		case => yield 1;
+		};
 	} else if (len(args) == 2 && args[1] != "show") {
 		yield askQuestion(storage, args[1]);
 	} else if (args[1] == "show" && len(args) == 3) {
