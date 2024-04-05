@@ -4,7 +4,9 @@ use print::{printv, logv};
 use strings::{concat, fromutf8};
 use io;
 
+// Show the content of a question given its hash or the question name.
 fn showQuestion(storage: str, qid: str) int = {
+	// Open file
 	let filename = match(searchQuestion(storage, qid)) {
 	case let s: str => yield s;
 	case void =>
@@ -14,7 +16,9 @@ fn showQuestion(storage: str, qid: str) int = {
 	defer free(filename);
 	let f: io::file = open(filename)!;
 	defer io::close(f)!;
-	printv(getQuestion(f), "\n");
+
+	// Print question title
+	printv("# ", getQuestion(f), "\n\n");
 	for (true) {
 		const buf:[]u8 = match(read_line(f)) {
 			case let bytes: []u8 => yield bytes;
@@ -27,7 +31,7 @@ fn showQuestion(storage: str, qid: str) int = {
 		printv(match(fromutf8(buf)) {
 			case let s: str => yield s;
 			case => continue;
-		}, "\n");
+		}, "\n\n");
 	};
 	return 0;
 };
