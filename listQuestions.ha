@@ -1,7 +1,10 @@
 use os::{diropen};
 use print::{printv, logv};
+use strings::{fromutf8, toutf8};
 use fs;
 use io;
+
+def PADSPACE: [16]u8 = [' '...];
 
 // List all questions
 fn listQuestions(storage: str) int = {
@@ -51,7 +54,8 @@ fn listQuestions(storage: str) int = {
 		// screen
 		let f: io::file = open(store_fs, entry.name)!;
 		defer io::close(f)!;
-		printv(entry.name, "\t", getQuestion(f), "\n");
+		let padding: str = fromutf8(PADSPACE[len(toutf8(entry.name))..]) as str;
+		printv(entry.name, padding, "\t", getQuestion(f), "\n");
 	};
 	return 0;
 };
