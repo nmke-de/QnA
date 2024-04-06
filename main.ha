@@ -17,7 +17,7 @@ export fn main() void = {
 	} else if (args[1] == "list") {
 		yield listQuestions(storage);
 	} else if (len(args[1]) < 8 && args[1] != "show") {
-		printv("\"", args[1], "\" is very short for a question. Continue? (y/N) ");
+		printv("\"", args[1], "\" is very short for a question. Do you want to create this question? (y/N) ");
 		let buf: [2]u8 = [0u8...];
 		match (read(0, buf)) {case => yield;};
 		yield switch (buf[0]) {
