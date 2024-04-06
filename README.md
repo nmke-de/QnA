@@ -34,3 +34,5 @@ Syntax: qna <question>
 `<question-id>` can be the full question, or the beginning of its hash as displayed at `qna list`.
 
 The questions are stored at `$QNA_STORAGE`. If this environment variable is not set, QnA will default to `$HOME/.qna_storage`.
+
+`qna show` also checks `$QNA_PAGER` for any pager where the question and its answers will be displayed. By default, the output is simply printed to screen, without any pager.
