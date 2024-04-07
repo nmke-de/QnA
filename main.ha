@@ -17,13 +17,15 @@ export fn main() void = {
 	} else if (args[1] == "list") {
 		yield listQuestions(storage);
 	} else if (len(args[1]) < 8 && args[1] != "show") {
+		// This prompt exists to prevent unintentional creation of
+		// questions, when in fact the user wants to show a question.
 		printv("\"", args[1], "\" is very short for a question. Do you want to create this question? (y/N) ");
 		let buf: [2]u8 = [0u8...];
 		match (read(0, buf)) {case => yield;};
 		yield switch (buf[0]) {
 		case 'y' => yield askQuestion(storage, args[1]);
 		case 'Y' => yield askQuestion(storage, args[1]);
-		case => yield 1;
+		case => yield showQuestion(storage, args[1]);
 		};
 	} else if (len(args) == 2 && args[1] != "show") {
 		yield askQuestion(storage, args[1]);
