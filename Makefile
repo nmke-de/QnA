@@ -8,7 +8,8 @@ uninstall:
 	rm -f /usr/local/bin/qna
 
 qna: *.ha print/*.ha
-	hare build -o qna
+	hare build -o qna -R
+	strip qna
 
 clean:
 	hare cache -c
