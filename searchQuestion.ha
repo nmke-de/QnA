@@ -7,6 +7,10 @@ use glob;
 
 // Tries to find a question based on query
 fn searchQuestion(storage: str, query: str) (str|void) = {
+	// Check if query is empty
+	if (query == "")
+		return void;
+
 	// Check verbatim query
 	const as_filename = concat(storage, "/", query);
 	if (exists(as_filename))
