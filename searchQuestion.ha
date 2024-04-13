@@ -35,12 +35,12 @@ fn searchQuestion(storage: str, query: str) (str|void) = {
 	case let f: glob::failure =>
 		logv(glob::strerror(f), "\n");
 		return;
-	case void => return;
+	case done => return;
 	};
 	// If a second element exists, return void due to unresolvable
 	// ambiguities. Otherwise, return first result.
 	match (glob::next(&globber)) {
-	case void => return result;
+	case done => return result;
 	case str => return;
 	case let f: glob::failure =>
 		logv(glob::strerror(f), "\n");

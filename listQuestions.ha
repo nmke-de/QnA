@@ -41,7 +41,7 @@ fn listQuestions(storage: str) int = {
 		// Get next item in directory
 		const entry: fs::dirent = match(iter.next(iter)) {
 			case let d: fs::dirent => yield d;
-			case void => break;
+			case done => break;
 			case fs::error => {
 				logv("Error when iterating over storage at `", storage, "`.\n");
 				return 6;
