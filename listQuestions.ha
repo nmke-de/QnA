@@ -37,16 +37,7 @@ fn listQuestions(storage: str) int = {
 	};
 
 	// Iterate over directory
-	for (true) {
-		// Get next item in directory
-		const entry: fs::dirent = match(iter.next(iter)) {
-			case let d: fs::dirent => yield d;
-			case done => break;
-			case fs::error => {
-				logv("Error when iterating over storage at `", storage, "`.\n");
-				return 6;
-			};
-		};
+	for (const entry => iter.next(iter)!) {
 		// Ignore files that are not regular files
 		if (entry.ftype & fs::mode::REG != fs::mode::REG)
 			continue;

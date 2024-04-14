@@ -63,15 +63,7 @@ fn showQuestion(storage: str, qid: str) int = {
 fn showQuestion_print(qid: str, f: io::file) int = {
 	// Print question title
 	printv("# ", getQuestion(f), "\n\n");
-	for (true) {
-		const buf:[]u8 = match(read_line(f)) {
-			case let bytes: []u8 => yield bytes;
-			case io::EOF => break;
-			case io::error => {
-				logv("Failed to read answer at question ", qid, ".\n");
-				return 7;
-			};
-		};
+	for (const buf => read_line(f)!) {
 		printv(match(fromutf8(buf)) {
 			case let s: str => yield s;
 			case => continue;

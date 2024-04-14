@@ -18,8 +18,8 @@ fn answerQuestion(storage: str, qid: str, answers: []str) int = {
 	defer io::close(f)!;
 
 	// Iterate over answers and append them.
-	for (let i = 0z; i < len(answers); i += 1) {
-		fdprintv(f, answers[i], "\n");
+	for (const answer &.. answers) {
+		fdprintv(f, *answer, "\n");
 	};
 	return 0;
 };
